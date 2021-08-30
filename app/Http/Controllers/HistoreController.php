@@ -17,16 +17,18 @@ class HistoreController extends Controller
         // данные с фронта
         $getObject = json_decode($request['object'], true);
         $getUser = json_decode($request['user'], true);
+        $getQuestionUser = $request['questionUser'];
 
         // для ответа
         $result = ['success' => true];
         $result['object'] = $getObject;
         $result['user'] = $getUser;
+        $result['questionUser'] = $getQuestionUser;
 
         // сохранение в БД
         $histore = new Histore();
         $histore->user_id = $getUser['user_id'];
-        $histore->question = 'вопрос';
+        $histore->question = $getQuestionUser;
         $histore->geksarama_id = $getObject['id'];
         $histore->save();
 

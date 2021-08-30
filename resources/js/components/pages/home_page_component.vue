@@ -5,12 +5,13 @@
 
                 <v-card
                     width="100%"
+                    class="mx-auto pa-5"
                 >
 
                     <v-card-title>
-                        <h2>
+                        <h3>
                             Введение
-                        </h2>
+                        </h3>
                     </v-card-title>
 
                     <v-card-text>

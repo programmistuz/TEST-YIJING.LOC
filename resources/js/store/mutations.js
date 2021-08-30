@@ -89,18 +89,29 @@ export default {
 
     // ------------------------------------------------------------------
     // гексарама текущая
-    MUTATTION_geksarabaCurrent(state, getObject) {
+    MUTATTION_geksaramaCurrent(state, getObject) {
 
         // присвоить новое значение
-        state.STATE_geksarabaCurrent = getObject;
+        state.STATE_geksaramaCurrent = getObject;
     },
 
     // ------------------------------------------------------------------
     // гексарама текущая отображается сейчас
-    MUTATTION_geksarabaCurrentIsShow(state, getValue) {
+    MUTATTION_geksaramaCurrentIsShow(state, getValue) {
 
         // присвоить новое значение
-        state.STATE_geksarabaCurrentIsShow = getValue;
+        state.STATE_geksaramaCurrentIsShow = getValue;
+    },
+
+    // ------------------------------------------------------------------
+    // вопрос Пользователя
+    MUTATTION_questionUser(state, getValue) {
+
+        console.log("--------------------");
+        console.log(getValue);
+
+        // присвоить новое значение
+        state.STATE_questionUser = getValue;
     },
 
     // ------------------------------------------------------------------
@@ -114,6 +125,7 @@ export default {
         let form = new FormData();
         form.append("object", JSON.stringify(getObject));
         form.append("user", JSON.stringify(state.Auth));
+        form.append("questionUser", state.STATE_questionUser);
 
         // запрос
         axios

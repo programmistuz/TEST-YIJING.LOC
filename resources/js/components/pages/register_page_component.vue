@@ -2,7 +2,11 @@
     <section>
         <v-container>
             <v-layout>
-                <v-card width="300" class="mx-auto mt-15">
+
+                <v-card
+                    width="300"
+                    class="mx-auto mt-15"
+                >
 
                     <v-card-title>
                         <h2>

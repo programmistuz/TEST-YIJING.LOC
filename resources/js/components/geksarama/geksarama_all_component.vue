@@ -4,10 +4,10 @@
         <!-- вывод всех гексарам -->
         <v-row v-for="y in 8" :key="y">
             <v-col v-for="x in 8" :key="x">
-                <GeksaranaOneComponent
+                <GeksaramaOneComponent
                     :id="STATE_geksaramaArr[(x*y-1)]"
                 >
-                </GeksaranaOneComponent>
+                </GeksaramaOneComponent>
             </v-col>
         </v-row>
 
@@ -17,12 +17,12 @@
 <script>
 
 import {mapState} from "vuex";
-import GeksaranaOneComponent from "./geksarama_one_component";
+import GeksaramaOneComponent from "./geksarama_one_component";
 
 export default {
 
     components: {
-        GeksaranaOneComponent,
+        GeksaramaOneComponent,
     },
 
     computed: {

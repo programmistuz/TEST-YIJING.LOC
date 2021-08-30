@@ -6,12 +6,13 @@
                 <v-card
                     :loading="STATE_loading"
                     width="100%"
+                    class="mx-auto pa-5"
                 >
 
                     <v-card-title>
-                        <h2>
+                        <h3>
                             История вопросов
-                        </h2>
+                        </h3>
                     </v-card-title>
 
                     <v-card-actions>
@@ -50,20 +51,31 @@
                     <!-- раскрывающаяся карточка  -->
                     <v-expand-transition>
                         <v-card
-                            v-if="STATE_geksarabaCurrentIsShow && STATE_geksarabaCurrent !== {}"
+                            v-if="STATE_geksaramaCurrentIsShow && STATE_geksaramaCurrent !== {}"
                             class="transition-fast-in-fast-out v-card--reveal"
                             style="height: 100%;"
                         >
 
                             <v-card-title>
-                                <h2>
+                                <h3>
                                     Толкование
-                                    {{ STATE_geksarabaCurrent.id }} - {{ STATE_geksarabaCurrent.name }}
-                                </h2>
+                                    {{ STATE_geksaramaCurrent.id }} - {{ STATE_geksaramaCurrent.name }}
+                                </h3>
                             </v-card-title>
 
                             <v-card-text>
-                                {{ STATE_geksarabaCurrent.text }}
+
+                                <h4>
+                                    На вопрос: <i><small>{{ STATE_questionUser }}</small></i>
+                                </h4>
+
+                                <br>
+
+                                <h4>
+                                    Ответ
+                                </h4>
+
+                                {{ STATE_geksaramaCurrent.text }}
                             </v-card-text>
 
                             <v-card-actions class="pt-0">
@@ -134,8 +146,9 @@ export default {
             'STATE_loading',
             'STATE_histore',
             'STATE_geksaramaMakeOnID',
-            'STATE_geksarabaCurrent',
-            'STATE_geksarabaCurrentIsShow',
+            'STATE_geksaramaCurrent',
+            'STATE_geksaramaCurrentIsShow',
+            'STATE_questionUser',
         ]),
     },
 
@@ -173,15 +186,12 @@ export default {
 
             // гексарама - создать по id
             this.$store.dispatch("ACTION_geksaramaMakeOnID", getItem.geksarama_id);
-
-            console.log(this.STATE_geksaramaMakeOnID);
-
             // гексарама текущая
             this.$store.dispatch("ACTION_geksaramaCurrent", this.STATE_geksaramaMakeOnID);
             // гексарама текущая отображается сейчас
             this.$store.dispatch("ACTION_geksaramaCurrentIsShow", true);
-
-            console.log(this.STATE_geksaramaMakeOnID);
+            // вопрос Пользователя
+            this.$store.dispatch("ACTION_questionUser", getItem.question);
         },
 
         // клик на закрыть подробности гексарамы

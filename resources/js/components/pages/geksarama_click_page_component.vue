@@ -6,17 +6,26 @@
                 <v-card
                     :loading="(myClickN < 6)"
                     width="100%"
+                    class="mx-auto pa-5"
                 >
 
                     <v-card-title>
-                        <h2>
-                            Генерация гексарамы случаным образом
-                        </h2>
+                        <h3>
+                            Введите, пожалуйста, Ваш вопрос и сгенерируйте гексараму случайным образом
+                        </h3>
                     </v-card-title>
 
                     <v-card-subtitle>
-                        Нажмите 6-ть раз мышкой или нажмите пробел (еще {{ 6 - myClickN }} раз...)
+                        Можете нажать 6-ть раз мышкой или нажать на клавиатуре Enter (еще {{ 6 - myClickN }} раз...)
                     </v-card-subtitle>
+
+                    <v-text-field
+                        label="Ваш вопрос"
+                        prepend-icon="mdi-help"
+                        type="text"
+                        v-model="STATE_questionUser"
+                        class="p-10"
+                    ></v-text-field>
 
                     <v-card-actions>
                         <v-btn
@@ -105,20 +114,31 @@
                     <!-- раскрывающаяся карточка  -->
                     <v-expand-transition>
                         <v-card
-                            v-if="STATE_geksarabaCurrentIsShow && STATE_geksarabaCurrent !== {}"
+                            v-if="STATE_geksaramaCurrentIsShow && STATE_geksaramaCurrent !== {}"
                             class="transition-fast-in-fast-out v-card--reveal"
                             style="height: 100%;"
                         >
 
                             <v-card-title>
-                                <h2>
+                                <h3>
                                     Толкование
-                                    {{ STATE_geksarabaCurrent.id }} - {{ STATE_geksarabaCurrent.name }}
-                                </h2>
+                                    {{ STATE_geksaramaCurrent.id }} - {{ STATE_geksaramaCurrent.name }}
+                                </h3>
                             </v-card-title>
 
                             <v-card-text>
-                                {{ STATE_geksarabaCurrent.text }}
+
+                                <h4>
+                                    На вопрос: <i><small>{{ STATE_questionUser }}</small></i>
+                                </h4>
+
+                                <br>
+
+                                <h4>
+                                    Ответ
+                                </h4>
+
+                                {{ STATE_geksaramaCurrent.text }}
                             </v-card-text>
 
                             <v-card-actions class="pt-0">
@@ -150,9 +170,9 @@ export default {
 
     data() {
         return {
-            myLines: [],
-            myClickN: 0,
-            myObject: {},
+            myLines: [], // генерируемые после клика полоски
+            myClickN: 0, // кол-во кликов или нажатий Пользователя
+            myObject: {}, // полученная гексарама
 
             myObjectColor: 'red', // цвет
             myObjectIDColor: '#000', // цвет id
@@ -165,13 +185,20 @@ export default {
     computed: {
         ...mapState([
             'STATE_geksaramaArrFull',
-            'STATE_geksaramaMakeOnID',
-            'STATE_geksaramaHalf',
             'STATE_geksarama',
             'STATE_geksaramaArr',
-            'STATE_geksarabaCurrent',
-            'STATE_geksarabaCurrentIsShow',
+            'STATE_geksaramaCurrent',
+            'STATE_geksaramaCurrentIsShow',
         ]),
+        // двунаправленное вычисляемое свойство с vuex
+        STATE_questionUser: {
+            get () {
+                return this.$store.state.STATE_questionUser;
+            },
+            set (value) {
+                this.$store.commit('MUTATTION_questionUser', value)
+            }
+        }
     },
 
     mounted() {
@@ -197,6 +224,11 @@ export default {
         // иницилизация / сброс
         funInit() {
 
+            // гексарама текущая отображается сейчас
+            this.$store.dispatch("ACTION_geksaramaCurrentIsShow", false);
+            // вопрос Пользователя
+            this.$store.dispatch("ACTION_questionUser", '');
+
             this.myClickN = 0;
             this.myLines = [];
             this.myObject = {};
@@ -207,7 +239,7 @@ export default {
         funOnKeyDown() {
 
             switch (event.key) {
-                case " ":
+                case "Enter":
                     // клик на холсте
                     this.funClick();
                     break;
@@ -269,6 +301,8 @@ export default {
         funOpen() {
 
             if (this.myObject !== {}) {
+                // вопрос Пользователя
+                this.$store.dispatch("ACTION_questionUser", this.STATE_questionUser);
                 // гексарама текущая
                 this.$store.dispatch("ACTION_geksaramaCurrent", this.myObject);
             }
@@ -277,8 +311,6 @@ export default {
         // ------------------------------------------------------------------
         // клик на закрыть подробности гексарамы
         funClose() {
-            // гексарама текущая отображается сейчас
-            this.$store.dispatch("ACTION_geksaramaCurrentIsShow", false);
 
             // иницилизация / сброс
             this.funInit();

@@ -99,7 +99,7 @@
             <v-col
                 class="text-right"
             >
-                Titov Sergey. All right reserved. 2021
+                Титов Сергей. All right reserved. 2021
             </v-col>
         </v-footer>
 

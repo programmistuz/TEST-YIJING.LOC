@@ -33,9 +33,9 @@ export default {
     ACTION_geksaramaCurrent({commit}, getObject) {
 
         // гексарама текущая
-        commit('MUTATTION_geksarabaCurrent', getObject);
+        commit('MUTATTION_geksaramaCurrent', getObject);
         // гексарама текущая отображается сейчас
-        commit('MUTATTION_geksarabaCurrentIsShow', true);
+        commit('MUTATTION_geksaramaCurrentIsShow', true);
         // записать в историю
         commit('MUTATTION_historeSave', getObject);
     },
@@ -44,7 +44,14 @@ export default {
     // гексарама текущая отображается сейчас
     ACTION_geksaramaCurrentIsShow({commit}, getValue) {
 
-        commit('MUTATTION_geksarabaCurrentIsShow', getValue);
+        commit('MUTATTION_geksaramaCurrentIsShow', getValue);
+    },
+
+    // ------------------------------------------------------------------
+    // вопрос Пользователя
+    ACTION_questionUser({commit}, getValue) {
+
+        commit('MUTATTION_questionUser', getValue);
     },
 
     // ------------------------------------------------------------------

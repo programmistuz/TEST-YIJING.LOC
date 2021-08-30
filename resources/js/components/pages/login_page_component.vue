@@ -3,7 +3,10 @@
         <v-container>
             <v-layout>
 
-                <v-card width="300" class="mx-auto mt-15">
+                <v-card
+                    width="300"
+                    class="mx-auto mt-15"
+                >
 
                     <v-card-title>
                         <h2>
@@ -24,10 +27,11 @@
                             <v-text-field
                                 label="Пароль"
                                 prepend-icon="mdi-lock"
-                                append-icon="mdi-eye-off"
+                                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                @click:append="showPassword = !showPassword"
+                                :type="showPassword ? 'text' : 'password'"
                                 v-model="form.password"
                                 :error-messages="checkError('password')"
-                                type="password"
                                 @keyup="onKeyup"
                             ></v-text-field>
                         </v-form>
@@ -62,6 +66,7 @@ export default {
 
     data() {
         return {
+            showPassword: false,
             form: {
                 email: null,
                 password: null
