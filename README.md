@@ -12,7 +12,7 @@
 ## Author
 
 Титов Сергей
-Стек: Laravel + Vue + Vue routing + Vuex + Vuetify
+Стек: Laravel + Vue + Vue routing + Vuex + Vuetify + SVG-холст
 
 ## Исходное тестовое задание
 
